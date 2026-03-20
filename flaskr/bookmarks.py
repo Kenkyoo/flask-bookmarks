@@ -44,20 +44,20 @@ def create():
     return render_template('bookmarks/create.html')
 
 def get_post(id, check_author=True):
-    bookmarks = get_db().execute(
+    bookmark = get_db().execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
     ).fetchone()
 
-    if bookmarks is None:
+    if bookmark is None:
         abort(404, f"Post id {id} doesn't exist.")
 
-    if check_author and bookmarks['author_id'] != g.user['id']:
+    if check_author and bookmark['author_id'] != g.user['id']:
         abort(403)
 
-    return bookmarks
+    return bookmark
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required

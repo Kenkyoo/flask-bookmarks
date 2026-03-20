@@ -27,10 +27,10 @@ def create_app(test_config=None):
         return 'Hello, World!'
 
     from . import db
-    db.init_app(app)
     from . import auth
-    app.register_blueprint(auth.bp)
     from . import bookmarks
+    db.init_app(app)
+    app.register_blueprint(auth.bp)
     app.register_blueprint(bookmarks.bp)
     app.add_url_rule('/', endpoint='index')
     return app

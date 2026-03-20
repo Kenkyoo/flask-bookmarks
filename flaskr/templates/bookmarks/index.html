@@ -8,18 +8,18 @@
 {% endblock %}
 
 {% block content %}
-  {% for post in posts %}
+  {% for bookmark in bookmarks %}
     <article class="post">
       <header>
         <div>
-          <h1>{{ bookmarks['title'] }}</h1>
-          <div class="about">by {{ bookmarks['username'] }} on {{ bookmarks['created'].strftime('%Y-%m-%d') }}</div>
+          <h1>{{ bookmark['title'] }}</h1>
+          <div class="about">by {{ bookmark['username'] }} on {{ bookmark['created'].strftime('%Y-%m-%d') }}</div>
         </div>
-        {% if g.user['id'] == bookmarks['author_id'] %}
-          <a class="action" href="{{ url_for('bookmarks.update', id=bookmarks['id']) }}">Edit</a>
+        {% if g.user['id'] == bookmark['author_id'] %}
+          <a class="action" href="{{ url_for('bookmarks.update', id=bookmark['id']) }}">Edit</a>
         {% endif %}
       </header>
-      <p class="body">{{ bookmarks['body'] }}</p>
+      <p class="body">{{ bookmark['body'] }}</p>
     </article>
     {% if not loop.last %}
       <hr>
