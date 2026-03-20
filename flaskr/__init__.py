@@ -30,5 +30,7 @@ def create_app(test_config=None):
     db.init_app(app)
     from . import auth
     app.register_blueprint(auth.bp)
-
+    from . import bookmarks
+    app.register_blueprint(bookmarks.bp)
+    app.add_url_rule('/', endpoint='index')
     return app
