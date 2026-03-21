@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Nuevo Marcador{% endblock %}</h1>
+  <hp class="subtitle mt-3">{% block title %}Nuevo Marcador{% endblock %}<p>
 {% endblock %}
 
 {% block content %}
+<div class="card">
+  <div class="card-content">
+    <div class="content">
   <form method="post">
-    <label for="url">Dirección Web (URL)</label>
-    <input name="url" id="url" type="url" placeholder="https://ejemplo.com" required>
+  <div class="field">
+    <label class="label" for="url">Dirección Web (URL)</label>
+    <input class="input" name="url" id="url" type="url" placeholder="https://ejemplo.com" required>
+</div>
+<div class="field">
+    <label class="label" for="body">Nota o Descripción</label>
+    <textarea class="textarea" name="body" id="body">{{ request.form['body'] }}</textarea>
 
-    <label for="body">Nota o Descripción</label>
-    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
-
-    <input type="submit" value="Guardar Marcador">
-  </form>
+    <input class="button is-black is-light mt-2" type="submit" value="Guardar Marcador">
+    </div>
+    </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

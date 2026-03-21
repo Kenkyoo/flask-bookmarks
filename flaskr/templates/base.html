@@ -11,8 +11,8 @@
     <header class="navbar">
       <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item">
-            Flaskr
+          <a href="/" class="navbar-item">
+            Home
           </a>
           <span class="navbar-burger" data-target="navbarMenuHeroC">
             <span></span>
@@ -33,10 +33,7 @@
             <span class="navbar-item">
               {% if g.user %}
               <a href="{{ url_for('bookmarks.create') }}" class="button is-dark is-inverted">
-                <span class="icon">
-                  <i class="fab fa-github"></i>
-                </span>
-                <span>New</span>
+                New
               </a>
               {% endif %}
             </span>
@@ -47,9 +44,9 @@
   </div>
 
   <!-- Hero content: will be in the middle -->
-  <div class="hero-body">
+  <div class="hero-body" style="max-width: 700px; margin: auto; width: 100%;">
     <div class="container has-text-centered">
-      <p class="title">Bookmars manager save</p>
+      <p class="title mb-4">Bookmars manager save</p>
       <p class="subtitle">{% block header %}{% endblock %}</p>
       {% for message in get_flashed_messages() %}
         <div class="flash">{{ message }}</div>
@@ -60,15 +57,15 @@
   </div>
   <!-- Hero footer: will stick at the bottom -->
   <div class="hero-foot" style="border-top: 1px solid aliceblue">
-    <footer class="footer">
+    <footer class="p-5">
   <div class="content has-text-centered">
     <p>
-      <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>.
+      <strong>Bookmarks saved</strong> by <a href="https://github.com/Kenkyoo?tab=repositories">Kenkyo</a>.
       The source code is licensed
       <a href="https://opensource.org/license/mit">MIT</a>. The
-      website content is licensed
-      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//"
-        >CC BY NC SA 4.0</a
+      repo content is 
+      <a href="https://github.com/Kenkyoo?/flask-bookmarks"
+        >Here!</a
       >.
     </p>
   </div>
