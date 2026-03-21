@@ -1,19 +1,30 @@
 {% extends 'base.html' %}
+
 {% block header %}
-  <h1>{% block title %}Edit "{{ bookmark['title'] }}"{% endblock %}</h1>
+  <p class="subtitle mt-3">{% block title %}Editar Marcador{% endblock %}<p>
 {% endblock %}
+
 {% block content %}
+<div class="card">
+  <div class="card-content">
+    <div class="content">
   <form method="post">
-    <label for="title">Name</label>
-    <input name="title" id="title"
-      value="{{ request.form['title'] or bookmark['title'] }}" required>
-    <label for="body">URL</label>
-    <input name="body" id="body" type="url"
-      value="{{ request.form['body'] or bookmark['body'] }}" required>
-    <input type="submit" value="Save">
+  <div class="field">
+    <label class="label" for="title">Dirección Web (URL)</label>
+    <input class="input" name="title" id="title" value="{{ request.form['title'] or bookmark['title'] }}" required>
+</div>
+<div class="field">
+    <label class="label" for="body">Nota o Descripción</label>
+    <textarea class="textarea" name="body" id="body">{{ request.form['body'] or bookmark['body'] }}</textarea>
+
+    <input class="button is-black is-light mt-2" type="submit" value="Guardar cambios">
+    </div>
+    </div>
+    </form>
+    <hr>
+      <form action="{{ url_for('bookmarks.delete', id=bookmark['id']) }}" method="post">
+    <input class="button is-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
   </form>
-  <hr>
-  <form action="{{ url_for('bookmarks.delete', id=bookmark['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+  </div>
+</div>
 {% endblock %}
