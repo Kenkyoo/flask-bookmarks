@@ -7,7 +7,7 @@ from flaskr.auth import login_required
 from flaskr.db import get_db
 
 from flask import request 
-from bs4 import BeautifulSoup
+from flask import BeautifulSoup
 
 bp = Blueprint('bookmarks', __name__)
 
