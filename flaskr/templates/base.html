@@ -1,24 +1,77 @@
 <!doctype html>
+<html data-theme="dark">
 <title>{% block title %}{% endblock %} - Flaskr</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
-  <h1>Flaskr</h1>
-  <ul>
-    {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-    {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Register</a>
-      <li><a href="{{ url_for('auth.login') }}">Log In</a>
-    {% endif %}
-  </ul>
-</nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+>
+<section class="hero is-black is-fullheight">
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head" style="border-bottom: 1px solid aliceblue">
+    <header class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            Flaskr
+          </a>
+          <span class="navbar-burger" data-target="navbarMenuHeroC">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroC" class="navbar-menu">
+          <div class="navbar-end">
+      {% if g.user %}
+        <a class="navbar-item"><span>{{ g.user['username'] }}</span>
+        <a class="navbar-item" href="{{ url_for('auth.logout') }}">Log Out</a>
+      {% else %}
+        <a class="navbar-item" href="{{ url_for('auth.register') }}">Register</a>
+        <a class="navbar-item" href="{{ url_for('auth.login') }}">Log In</a>
+      {% endif %}
+            <span class="navbar-item">
+              {% if g.user %}
+              <a href="{{ url_for('bookmarks.create') }}" class="button is-dark is-inverted">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>New</span>
+              </a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <p class="title">Bookmars manager save</p>
+      <p class="subtitle">{% block header %}{% endblock %}</p>
+      {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+    
+    {% block content %}{% endblock %}
+    </div>
+  </div>
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot" style="border-top: 1px solid aliceblue">
+    <footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>.
+      The source code is licensed
+      <a href="https://opensource.org/license/mit">MIT</a>. The
+      website content is licensed
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//"
+        >CC BY NC SA 4.0</a
+      >.
+    </p>
+  </div>
+</footer>
+  </div>
 </section>

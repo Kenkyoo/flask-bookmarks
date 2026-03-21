@@ -1,28 +1,35 @@
 {% extends 'base.html' %}
-
 {% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('bookmarks.create') }}">New</a>
-  {% endif %}
+  <<p class="subtitle">{% block title %}Bookmarks{% endblock %}</p>
 {% endblock %}
-
 {% block content %}
+<article class="panel is-dark">
+  <p class="panel-heading">My Bookmarks</p>
+  <p class="panel-tabs">
+    <a class="is-active">All</a>
+    <a>Public</a>
+    <a>Private</a>
+    <a>Sources</a>
+    <a>Forks</a>
+  </p>
+  <div class="panel-block">
+    <p class="control has-icons-left">
+      <input class="input is-dark" type="text" placeholder="Search" />
+      <span class="icon is-left">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </span>
+    </p>
+  </div>
   {% for bookmark in bookmarks %}
-    <article class="post">
-      <header>
-        <div>
-          <h1>{{ bookmark['title'] }}</h1>
-          <div class="about">by {{ bookmark['username'] }} on {{ bookmark['created'].strftime('%Y-%m-%d') }}</div>
-        </div>
-        {% if g.user['id'] == bookmark['author_id'] %}
-          <a class="action" href="{{ url_for('bookmarks.update', id=bookmark['id']) }}">Edit</a>
-        {% endif %}
-      </header>
-      <p class="body">{{ bookmark['body'] }}</p>
-    </article>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
+  {% if g.user and g.user['id'] == bookmark['author_id'] %}
+    <a class="panel-block" href="{{ url_for('bookmarks.update', id=bookmark['id']) }}">
+  
+    <span class="panel-icon">
+      <i class="fas fa-book" aria-hidden="true"></i>
+    </span>
+    {{ bookmark['title'] }}
+  </a>
+  {% endif %}
   {% endfor %}
+</article>
 {% endblock %}
