@@ -6,8 +6,8 @@ from werkzeug.exceptions import abort
 from flaskr.auth import login_required
 from flaskr.db import get_db
 
-from flask import request 
-from flask import BeautifulSoup
+import requests
+from bs4 import BeautifulSoup
 
 bp = Blueprint('bookmarks', __name__)
 
