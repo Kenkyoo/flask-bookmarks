@@ -6,6 +6,9 @@ from werkzeug.exceptions import abort
 from flaskr.auth import login_required
 from flaskr.db import get_db
 
+import requests
+from bs4 import BeautifulSoup
+
 bp = Blueprint('bookmarks', __name__)
 
 @bp.route('/')
@@ -18,16 +21,34 @@ def index():
     ).fetchall()
     return render_template('bookmarks/index.html', bookmarks=bookmarks)
 
+def get_title(url):
+    try:
+        # 1. Visitamos la web
+        req = requests.get(url, timeout=5)
+        
+        # 2. Parseamos el contenido
+        sopa = BeautifulSoup(req.text, 'html.parser')
+        
+        # 3. Extraemos el texto de la etiqueta <title>
+        title = sopa.title.string if sopa.title else "Sin título"
+        return title.strip()
+    except:
+        return "Enlace no disponible"
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
     if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
+        url = request.form.get('url')
+        
+        title = get_title(url)
+        
+        body = request.form.get('body')
+        
         error = None
 
-        if not title:
-            error = 'Title is required.'
+        if not url:
+            error = 'La URL es obligatoria.'
 
         if error is not None:
             flash(error)
@@ -36,7 +57,7 @@ def create():
             db.execute(
                 'INSERT INTO post (title, body, author_id)'
                 ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                (title, body, g.user['id']) # 'title' ahora es el nombre de la web extraído
             )
             db.commit()
             return redirect(url_for('bookmarks.index'))
